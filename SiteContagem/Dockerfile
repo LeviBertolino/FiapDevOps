@@ -1,5 +1,4 @@
-# Utilizacao de imagem do SDK para build do projeto
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:7.0.100-rc.2 AS build-env
 WORKDIR /app
 
 # Copiar csproj e restaurar dependencias
@@ -11,7 +10,7 @@ COPY . ./
 RUN dotnet publish -c Release -o out
 
 # Build da imagem
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+FROM mcr.microsoft.com/dotnet/aspnet:7.0.0-rc.2
 WORKDIR /app
 COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "SiteContagem.dll"]
